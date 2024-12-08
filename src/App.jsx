@@ -1,16 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const url = "http://localhost:3000/products";
+  const [products, setProducts] = useState([])
+
+  useEffect(()=>{
+
+    async function fetchData(){
+
+      try{
+
+        const res = await fetch(url);
+    
+        const data = await res.json();
+    
+        setProducts(data)
+
+      }catch(error){
+
+        console.error(error)
+
+      }
+  
+    }
+
+    fetchData();
+
+  }, [])
+
+  console.log(products)
 
   return (
     <>
       <div className='app'>
 
         <h1>Lista de Produtos</h1>
+
+        <ul>
+          {products.map((product) => (
+
+            <li key={product.id}>{product.name} - R$ {product.price}</li>
+
+          ))}
+        </ul>
 
       </div>
     </>
