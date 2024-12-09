@@ -30,7 +30,7 @@ function App() {
 
     fetchData();
 
-  }, [products])
+  }, [])
 
   const handleSubmit = async (e) =>{
 
@@ -54,6 +54,13 @@ function App() {
     }
 
     let res = await fetch(url, options)
+
+    const addProduct = await res.json();
+
+    setProducts((prevProducts) => [...prevProducts, addProduct])
+
+    setName("")
+    setPrice("")
 
   }
 
