@@ -30,7 +30,7 @@ function App() {
 
     fetchData();
 
-  }, [])
+  }, [products])
 
   const handleSubmit = async (e) =>{
 
@@ -43,15 +43,17 @@ function App() {
 
     };
 
-    const res = await fetch(url, {
+    const options = {
 
       method: "POST",
       headers: {
-        "Content-Type:" : "application/json"
+        "Content-Type" : "application/json"
       },
       body: JSON.stringify(product)
 
-    })
+    }
+
+    let res = await fetch(url, options)
 
   }
 
@@ -59,16 +61,8 @@ function App() {
     <>
       <div className='app'>
 
-        <h1>Lista de Produtos</h1>
-
-        <ul>
-          {products.map((product) => (
-
-            <li key={product.id}>{product.name} - R$ {product.price}</li>
-
-          ))}
-        </ul>
-
+        <h3>Formulario de Produtos</h3>
+        
         <div className='add-product'>
 
           <form onSubmit={handleSubmit}>
@@ -83,6 +77,16 @@ function App() {
           </form>
 
         </div>
+
+        <h3>Lista de Produtos</h3>
+
+        <ul>
+          {products.map((product) => (
+
+            <li key={product.id}>{product.name} - R$ {product.price}</li>
+
+          ))}
+        </ul>
 
       </div>
     </>
